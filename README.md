@@ -23,5 +23,5 @@ IMP_AGV is focused on ...
 
 ## Authors
 - **Luzi Schöb**
-- **Christoph [Last Name]**
+- **Christoph Zweifel**
 
