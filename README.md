@@ -10,7 +10,7 @@ This repository contains the code and documentation for the **IMP_AGV** project.
 
 1. **live_demo.ipynb** - Start here for an interactive demonstration of the AGV system.
 
-Comming soon...
+Coming soon...
 2. **src/** - Source code for all modules related to AGV control and task management.
 3. **docs/** - Detailed documentation for each module and AGV integration specifics.
 
