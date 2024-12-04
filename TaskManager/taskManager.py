@@ -15,7 +15,13 @@ class Task:
         self.destination = destination
         self.amount = amount
         self.taskId = str(uuid.uuid4())
+        self.priority = 1
+        self.status = 'pending'
         # self.subtaskIds = self.break_down_task(self)
+        # self.subtask = self.break_down_task(self)
+
+        task_manager = TaskManager()
+        task_manager.process_task(self)
 
     def validate_task(self) -> [bool, str]:
         # Check existence of departure attribute
@@ -86,6 +92,14 @@ class Subtask(Task):
         Subtasks are the atomic steps of a Task
     """
 
+    def __init__(self, departure, destination, taskId: Task, priority=1):
+        super().__init__(departure, destination)
+        self.amount = 1
+        self.parentTaskId = taskId
+        self.subtaskId = str(uuid.uuid4())
+        self.priority = priority
+        self.status = 'pending'
+
 
 class SingletonMeta(type):
     """
@@ -103,8 +117,12 @@ class SingletonMeta(type):
 
 class TaskManager(metaclass=SingletonMeta):
     def __init__(self):
-        # empty taskList
-        self.taskList = {}
+        self.tasks = []
+
+    def process_task(self, task):
+        # Weiterverarbeitung des Tasks
+        self.tasks.append(task)
+        print(f"Task hinzugefügt: {task}")
 
         # add database connection later for consistency
 
@@ -127,3 +145,17 @@ class TaskManager(metaclass=SingletonMeta):
             'message': 'Task processed successfully'
         }
     """
+
+    def get_tasklist(self):
+        return self._taskList
+
+    def add_task_to_tasklist(self, task: Task) -> bool:
+        task_data = {
+            task.taskId: {
+                'departure': task.departure,
+                'destination': task.destination,
+                'amount': task.amount
+            }
+        }
+        self._taskList.update(task_data)
+        return True

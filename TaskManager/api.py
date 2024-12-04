@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, make_response
-from taskManager import Task  # to process tasks
-import pprint
+from taskManager import Task, TaskManager
 
 
 print("Starting the Flask application...")
@@ -22,6 +21,8 @@ def add_task():
 
     # add the assigned taskId before returning it
     submitted_task_body['task_id'] = task.taskId
+    submitted_task_body['distance'] = abs(ord(submitted_task_body['departure']) - ord(submitted_task_body['destination']))
+    submitted_task_body['cost'] = submitted_task_body['distance'] * submitted_task_body['amount']
 
     response = make_response(jsonify(accepted_task=submitted_task_body), 200)
     return response
@@ -29,5 +30,6 @@ def add_task():
 
 @app.route(api_prefix + '/tasklist', methods=['GET'])
 def get_tasklist():
+    TaskManager
     return make_response(jsonify({'taskId': 'a400ee34-3750-4ad2-8d9d-549ac5f8742f-TESTDATA'}), 200)
 
